@@ -3,5 +3,5 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('dashboard.master.main');
+    return view('dashboard.pages.admin.dashboard');
 });
