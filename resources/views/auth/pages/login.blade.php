@@ -17,7 +17,7 @@
 </div>
 @endsection
 @section('pagetitle')
-Mlebu
+Login
 @endsection
 @section('pagecontent')
 <form method="POST" action="{{ route('login') }}" class="text-start">
@@ -37,9 +37,5 @@ Mlebu
   <div class="text-center">
     <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign in</button>
   </div>
-  <p class="mt-4 text-sm text-center">
-    Don't have an account?
-    <a href="#" class="text-primary text-gradient font-weight-bold">Sign up</a>
-  </p>
 </form>
 @endsection

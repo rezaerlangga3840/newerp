@@ -8,10 +8,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-Route::group(['middleware'=>'auth'],function(){
+Route::group(['middleware'=>['auth','privileges:superadmin,admin']],function(){
     Route::group(['prefix'=>'profile'], function(){
         Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/', [ProfileController::class, 'update'])->name('profile.update');
@@ -20,6 +17,7 @@ Route::group(['middleware'=>'auth'],function(){
     Route::group(['prefix'=>'dashboard'], function(){
         Route::get('/',[DashboardController::class,'index'])->name('dashboard');
     });
+    Route::resource('/branches', BranchesController::class);
 });
 
 require __DIR__.'/auth.php';

@@ -15,7 +15,7 @@ class PrivilegeLevels
      */
     public function handle(Request $request, Closure $next,...$roles): Response
     {
-        if(in_array($request->user()->privilege,$roles)){
+        if(in_array($request->user()->privilege, $roles)){
             return $next($request);
         }
         return abort(404);
