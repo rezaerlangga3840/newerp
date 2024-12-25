@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\branches;
+use App\Models\User;
+
 
 class BranchesController extends Controller
 {
@@ -13,8 +15,8 @@ class BranchesController extends Controller
      */
     public function index()
     {
-        $branches = branches::where('created_by', '=', \Auth::user()->creatorId())->get();
-        return view('branches.index', compact('branches'));
+        $branches = branches::all();
+        return view('dashboard.pages.admin.forms.branches.index', compact('branches'));
     }
 
     /**
@@ -30,7 +32,24 @@ class BranchesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator=\Validator::make(
+            $request->all(),[
+                'group_name'=>'required',
+                'branch_name'=>'required',
+                'branch_address'=>'required',
+            ]
+        );
+        if($validator->fails())
+        {
+            $messages = $validator->getMessageBag();
+            return redirect()->back()->with('error', $messages->first());
+        }
+        $branches = new branches();
+        $branches->group_name=$request->group_name;
+        $branches->branch_name=$request->branch_name;
+        $branches->branch_address=$request->branch_address;
+        $branches->save();
+        return redirect()->back();
     }
 
     /**
@@ -46,7 +65,7 @@ class BranchesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        
     }
 
     /**
@@ -54,7 +73,24 @@ class BranchesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $branches=branches::find($id);
+        $validator=\Validator::make(
+            $request->all(),[
+                'group_name'=>'required',
+                'branch_name'=>'required',
+                'branch_address'=>'required',
+            ]
+        );
+        if($validator->fails())
+        {
+            $messages = $validator->getMessageBag();
+            return redirect()->back()->with('error', $messages->first());
+        }
+        $branches->group_name=$request->group_name;
+        $branches->branch_name=$request->branch_name;
+        $branches->branch_address=$request->branch_address;
+        $branches->save();
+        return redirect()->back();
     }
 
     /**

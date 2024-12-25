@@ -37,6 +37,7 @@
   </main>
   @include('dashboard.master.fixedplugin')
   @include('dashboard.master.scripts')
+  @yield('customscripts')
 </body>
 
 </html>
